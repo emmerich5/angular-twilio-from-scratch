@@ -1,0 +1,25 @@
+body {
+    border: 1px pink solid;/* debugging */
+    margin: 0 auto;
+    height: 100%;           /* Make BODY fill entire screen vertically */
+    min-height: 550px; 
+    max-width: 1000px;    
+    display: flex;          /* Create a Flex container for BODY children elements */
+    flex-direction: column; /* Children elements will position vertically like a tower (1 on top the another) */
+                            /* Will use an image (like PNG, SVG) as background on BODY */
+    background-image: url("/assets/img/cloud-engineer.svg");
+                            /* Background will not be repeated as a pattern, and will be centered */
+    background-repeat: no-repeat;
+    background-position:center ;
+}
+.content {
+    border: 1px green solid;/* debugging */
+    flex: 1 0 auto;         /* Equivalent to write:
+                                flex-grow: 1;       How Element will grow in relation to rest, 1 means equals
+                                flex-shrink: 0;     How Element will shrink in relation to rest, 1 means equals
+                                flex-basis: auto;   How element's length will be initially. Deaults is 0
+                            */
+ }
+footer {
+    text-align: center;     /* Make any text align at the center */
+}

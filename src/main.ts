@@ -1,0 +1,1 @@
+console.log("Single Page App - SPA");
