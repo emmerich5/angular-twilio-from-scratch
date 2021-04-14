@@ -3,11 +3,12 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
                                 // Copies file and folders to build folder
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+                                // Removes all files in output.path (/dist) before a build
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 //--- 2. CREATE OBJECT TO BE READ BY WEBPACK
                             // Basically everything inside { } is used by Webpack
 module.exports = {
-
 //--- 3. LANE MODE
         mode: 'development',// Use 'production' for Production Lane
 //--- 4. ENTRY POINT        
@@ -30,7 +31,7 @@ module.exports = {
                             // Specifying the folder '~/dist`
             path: __dirname + '/dist',
                             // Specifying the output file '~/dist/app.js`
-            filename: 'app.js',
+            filename: 'app.js'
                             // A more advanced ouput dealing with multiple files and hashes
                             // Example where [name] makes automatic reference to Step 4 entry names.
                             // and [fullhash] generates an automatic hash. Both part of Webpack features.
@@ -38,12 +39,12 @@ module.exports = {
                             //    filename: '[name].js',
                             //    path: __dirname + '/dist/[fullhash]',
                             //  },
-                            //
-            clean: true     // Remove all output path files ('/dist') before a new build
         },
 //--- 6. SETUP PLUGINS
-
+                            // Plugins Order is relevant
         plugins: [
+                            // Remove all output path files ('/dist') before a new build
+            new CleanWebpackPlugin(),
                             // Copy Assets .CSS .PNG to ouput specified in 5. 
                             // Copy '~/src/assets` to '~/dist/assets'
             new CopyWebpackPlugin({

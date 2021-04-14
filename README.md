@@ -7,7 +7,7 @@ Angular CLI behind the scenes relies on basic Node.js setup, and must include at
 * TypeScript
 * Modules, which Angular uses the tool `Webpack` to manage (before it was ~~`SystemJS`~~ )
 
-This setup utilizes Webpack which Angular:
+This setup utilizes Webpack v4 and some specific plugin version numbers due to dependencies. For example @ngtools/webpack requires Webpack v4
 
 # 1 - MINIMAL NODE.JS + EXPRESS ENVIRONMENT
 Basically, create the minimal packages Angular needs from Node.js to run. There is 2 types of packages:
@@ -19,10 +19,10 @@ Basically, create the minimal packages Angular needs from Node.js to run. There 
 | STEP | CONSOLE | DERIVERABLE | DESCRIPTION |
 | --- | --- | --- | --- |
 | 1 |`npm init -y`| +package.json | Initialize project folder as Node.js |
-| 2 |`npm install typescript --save-dev` | +node_modules/typescript | Install TypeScript package. Means download it. |
+| 2 |`npm install typescript@">=4.0 and <4.2" --save-dev` | +node_modules/typescript | Install TypeScript package. Means download it. |
 | | | +package-lock.json  | First time `npm install` creates this, which has detailed package info and its dependencies. Also `--save-dev` adds a line `dev:true` to flag this package available only in development |
 | | | U package.json | Updates it to add package dependency for `typescript` |
-| 3 | `npm install webpack webpack-cli html-webpack-plugin copy-webpack-plugin --save-dev` | +node_modules/many | Install Webpack packages, which install many more due to dependencies. |
+| 3 | `npm install webpack@4 webpack-cli html-webpack-plugin@4 copy-webpack-plugin@6 clean-webpack-plugin@3 --save-dev` | +node_modules/many | Install Webpack packages, which install many more due to dependencies. |
 | | | U package.json, U package-lock.json | Several packages have been added |
 | 4 | `npm install ejs express --save` | +node_modules/many, U package.json, U package-lock.json | Installs Expres (Routing), and EJS (HTML Template) for production. |
 
@@ -48,10 +48,12 @@ project_root_folder
  ..
  ..
  "devDependencies": {
-    "copy-webpack-plugin": "^8.1.0",
-    "html-webpack-plugin": "^5.3.1",
-    "typescript": "^4.2.3",
-    "webpack": "^5.30.0"
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.4.1",
+    "html-webpack-plugin": "^4.5.2",
+    "typescript": ">=4.0 and <4.2",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.6.0"
   },
   "dependencies": {
     "ejs": "^3.1.6",
@@ -68,7 +70,7 @@ project_root_folder
   ..  
   "dependencies": {
     "typescript": {
-      "version": "4.2.3",
+      "version": "4.1.5",
       "resolved": "https://registry.npmjs.org/typescript/_etc_.tgz",
       "integrity": "sha512-33g3pMJk3bg5nXbL_etc_==",
       "dev": true,
@@ -444,36 +446,15 @@ app.listen(PORT, HOSTNAME, () => {console.log(`Listening on http://${HOSTNAME}:$
 
 
 # 4 - MINIMAL RUNNING APP WITH ANGULAR
-Basically, the running App in 2) but with Angular support.
+Basically, the running App in 3) but with Angular support.
 
 # 5 - MINIMAL COMPONENT AND SERVICE
-Basically, adding to 3) support for Observable, Template, Async Injection
-
-
-
----
-# THIS SECTION MUST GO AT ANOTHER MARKDOWN PAGE
-
-# SERVER SIDE RENDERING (SSR)
-## Use Cases
-Utilized to:
-1. Improve Web Crawlers and Search Engine Optimization (SEO)
-2. Improve performance on Mobile/Lowe-Powered Devices
-3. Improve 1st page speeed loading (First-Contentful Paint - FCP)
-
-## Benefits
-1. SSR can generate static versions (fully rendered pages) that are searchable, linkable, and navigable by crawlers/searches. By default Web Apps (Ex Angular) can be heavily interactive, which produces content unfriendly to crawlers/searches.
-2. SSR can use little or No JavaScript which benefits low-powered/old devices.
-3. SSR can serve a static landing page, while Web App is loading behind it, which allows immediate user engagement.
-
-## How-To
-1. Angular uses Angular Universal for SSR.
+Basically, adding to 4) support for Observable, Template, Async Injection
 
 # REFERENCES
-* https://web.dev/first-contentful-paint/
+https://www.twilio.com/blog/2018/03/building-an-app-from-scratch-with-angular-and-webpack.html
+https://www.taniarascia.com/how-to-use-webpack/
+https://dev.to/antonmelnyk/how-to-configure-webpack-from-scratch-for-a-basic-website-46a5
+https://levelup.gitconnected.com/how-to-create-a-production-ready-webpack-4-config-from-scratch-ba1862e1607c  
+https://stackoverflow.com/questions/46677752/the-difference-between-requirex-and-import-x
 
----
-# THIS SECTION MUST GO AT ANOTHER MARKDOWN PAGE
-
-# ANGULAR UNIVERSAL - SERVER SIDE RENDERING (SSR)
-See https://angular.io/guide/universal to add info
